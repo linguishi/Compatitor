@@ -1,0 +1,4 @@
+*.pyc
+getRawData.py
+analyzedCouterparts.py
+/tmpdata
