@@ -27,8 +27,7 @@ document格式
 
 示例
 ```python
-    answer = queryByAppid("921458519",10)
-    print(getDetailFromAppids(map(lambda x:x[0], answer)))
+    answer = queryByAppid("921458519",5)
 ```
 输出
 ```sh
