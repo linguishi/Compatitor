@@ -6,6 +6,7 @@ Created on Tue Dec 08 16:36:48 2015
 """
 from langdetect import detect
 from langdetect.lang_detect_exception import LangDetectException
+from data.data_utils import lineCounts
 import json
 import os
 
@@ -61,15 +62,6 @@ def testfilterJsonFile(filename):
         count = count + 1
         if(count==20):break
     jsonFile.close()
-
-
-def lineCounts(filename):
-    f = open(filename,'r')
-    i = 0
-    for line in f:
-        i = i+1
-    f.close()
-    return i
     
 
 def findStartPoint(fromline,filename,target):

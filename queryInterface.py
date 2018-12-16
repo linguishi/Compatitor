@@ -111,5 +111,7 @@ def isCompatitor(enermyAppid, myAppid, threthold = 0.2):
 
 
 if __name__ == "__main__":
-    answer = queryByAppid("921458519",10)
-    print(getDetailFromAppids(map(lambda x:x[0], answer)))
+    answer = queryByAppid("921458519",5)
+    for app in getDetailFromAppids(map(lambda x:x[0], answer)):
+        print app
+        print '-'*70 + '\n'
