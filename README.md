@@ -8,7 +8,7 @@
 
 接近 25000 个APP的描述信息。
 
-document格式
+document格式, 以*Dr. Cleaner*为例
 ```json
 {
     "Appid": 921458519, 
@@ -70,7 +70,7 @@ You can also email us directly at mac_support@trendmicro.com."
 
 示例
 ```python
-    answer = queryByAppid("921458519",5)
+queryByAppid("921458519",5)
 ```
 输出 **TOP5**
 
@@ -120,7 +120,7 @@ Multiple filters of size, date, name and type
 We value your feedback! Please comment in the App Store or submit ideas and requests directly to our developers through our support portal (http://Appletuner.trendmicro.com/support). 
 You can also email us directly at mac_support@trendmicro.com."
 }
-
+```
 2. 
 ```json
 {
