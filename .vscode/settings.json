@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/home/lin/Software/anaconda2/envs/tensorflow_env/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "yapf",
+    "python.linting.flake8Args": ["--max-line-length=248"]
+}

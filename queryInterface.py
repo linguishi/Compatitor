@@ -5,7 +5,6 @@ Created on Thu Dec 10 10:14:12 2015
 @author: guishi_lin
 """
 from gensim import corpora, models, similarities, matutils
-from filterEnglish import isEnglish
 from preProcess import simpleTokenize
 from data.data_utils import getStopWords
 import json
@@ -33,6 +32,7 @@ tfidf = models.TfidfModel.load(os.path.join(datapath, 'model.tfidf_model'))
 
 stopWords = getStopWords()
 
+
 def getAppidFromIndex(idx, corpusRawFile='data/filterByLang.json'):
     f = open(os.path.join(dirpath, corpusRawFile), 'r')
     count = 0
@@ -45,6 +45,7 @@ def getAppidFromIndex(idx, corpusRawFile='data/filterByLang.json'):
         f.close()
         return jsonobj["Appid"]
 
+
 def getDetailFromAppids(appids, corpusFile='data/filterByLang.json'):
     appids = map(str, appids)
     f = open(os.path.join(dirpath, corpusFile), 'r')
@@ -55,9 +56,12 @@ def getDetailFromAppids(appids, corpusFile='data/filterByLang.json'):
             rs.append(jsonObj)
     return rs
 
+
 def getDescriptionFromAppid(appid):
     description = getDetailFromAppids([appid])
-    return unicode(description[0]['AppName']+' '+description[0]['Description'], 'utf8')
+    return unicode(
+        description[0]['AppName'] + ' ' + description[0]['Description'],
+        'utf8')
 
 
 def getLSIVector(text):
@@ -73,14 +77,16 @@ def queryByDescription(text, topNum=100):
     return a list of appids contained in coupus that similar with the input
     """
     appidListSimilarity = []
-#    if not isEnglish(text): return -1
+    #    if not isEnglish(text): return -1
     queryLSIVec = getLSIVector(text)
     index.num_best = topNum
     sims = index[queryLSIVec]
-#    sims = sorted(enumerate(sims), key = lambda item: -item[1])
-#    print sims[0:topNum]
+    #    sims = sorted(enumerate(sims), key = lambda item: -item[1])
+    #    print sims[0:topNum]
     for item in sims:
         appidListSimilarity.append((getAppidFromIndex(item[0]), item[1]))
+
+
 #    rmove sims when not debug
     return appidListSimilarity
 
@@ -96,7 +102,7 @@ def queryByAppid(appid, topNum=100):
     return queryByDescription(detail[0]['Description'], topNum)
 
 
-def isCompatitor(enermyAppid, myAppid, threthold = 0.2):
+def isCompatitor(enermyAppid, myAppid, threthold=0.2):
     """
     input two appid
     print out the similarity of the two and return true or not
@@ -111,7 +117,7 @@ def isCompatitor(enermyAppid, myAppid, threthold = 0.2):
 
 
 if __name__ == "__main__":
-    answer = queryByAppid("921458519",5)
-    for app in getDetailFromAppids(map(lambda x:x[0], answer)):
+    answer = queryByAppid("921458519", 5)
+    for app in getDetailFromAppids(map(lambda x: x[0], answer)):
         print app
-        print '-'*70 + '\n'
+        print '-' * 70 + '\n'

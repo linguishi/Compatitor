@@ -15,16 +15,20 @@ def generateModel(fileName='RawData20160307.json'):
     RawData = open(fileName, 'r')
     stopWords = getStopWords()
     print "prepocessing the RawData...",
-    texts = [simpleTokenize(json.loads(
-        line)['AppName']+' '+json.loads(line)['Description'], stopWords) 
-        for line in RawData]
-    RawData.close()    
+    texts = [
+        simpleTokenize(
+            json.loads(line)['AppName'] + ' ' +
+            json.loads(line)['Description'], stopWords) for line in RawData
+    ]
+    RawData.close()
     print "prepocessing the RawData Done!"
 
     print "generating a dictionary...",
     dictionary = corpora.Dictionary(texts)
-    once_ids = [tokenid for tokenid,
-                docfreq in dictionary.dfs.iteritems() if docfreq == 1]
+    once_ids = [
+        tokenid for tokenid, docfreq in dictionary.dfs.iteritems()
+        if docfreq == 1
+    ]
     dictionary.filter_tokens(once_ids)
     dictionary.compactify()
     print "generating a dictionary Done!"

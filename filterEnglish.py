@@ -12,46 +12,47 @@ import os
 
 
 def isEnglish(text):
-    if detect(text)=='en':
+    if detect(text) == 'en':
         return True
     else:
         return False
 
 
-def filterRawDataByLang(inputFile,outputFile):
+def filterRawDataByLang(inputFile, outputFile):
     """
     filer the non english description in the corpus inputFile
     """
     print "start to filter the raw data by language..."
-    inputJsonFile = open(inputFile,'r')
+    inputJsonFile = open(inputFile, 'r')
     if os.path.isfile(outputFile):
         os.remove(outputFile)
-    outputJsonFile = open(outputFile,'ab')
+    outputJsonFile = open(outputFile, 'ab')
     count = 0
     checkNum = 0
     totalLines = lineCounts(inputFile)
     for line in inputJsonFile:
         jsonobj = json.loads(line)
         checkNum = checkNum + 1
-        if checkNum > 0 :
+        if checkNum > 0:
             try:
-                if(isEnglish(jsonobj["Description"])):
-                    json.dump(jsonobj,outputJsonFile)
+                if (isEnglish(jsonobj["Description"])):
+                    json.dump(jsonobj, outputJsonFile)
                     count = count + 1
-                    if(checkNum%1000==0):
-                        print "Processing %d / %d items..." % (checkNum, totalLines)
+                    if (checkNum % 1000 == 0):
+                        print "Processing %d / %d items..." % (checkNum,
+                                                               totalLines)
                     outputJsonFile.write('\n')
             except LangDetectException as e:
                 print e
                 continue
     outputJsonFile.close()
     inputJsonFile.close()
-    print "total: %d en items" % (count,)
+    print "total: %d en items" % (count, )
 
 
 def testfilterJsonFile(filename):
-    jsonFile = open(filename,'r')
-    count = 0 
+    jsonFile = open(filename, 'r')
+    count = 0
     print "start to filter the data..."
     for line in jsonFile:
         jsonobj = json.loads(line)
@@ -60,25 +61,29 @@ def testfilterJsonFile(filename):
         print detect(jsonobj["Description"])
         print jsonobj["Description"]
         count = count + 1
-        if(count==20):break
+        if (count == 20):
+            break
     jsonFile.close()
-    
 
-def findStartPoint(fromline,filename,target):
-    f = open(filename,'r')
+
+def findStartPoint(fromline, filename, target):
+    f = open(filename, 'r')
     i = 0
     rs = -1
     for line in f:
-        i = i+1
-        if i>=fromline:
-#            print line
-            if target==json.loads(line)['Appid']:rs = i+1
-            elif i>(fromline+100): break
-        else: continue
-    f.close()    
+        i = i + 1
+        if i >= fromline:
+            #            print line
+            if target == json.loads(line)['Appid']:
+                rs = i + 1
+            elif i > (fromline + 100):
+                break
+        else:
+            continue
+    f.close()
     return rs
 
+
 if __name__ == "__main__":
-    filterRawDataByLang('data/RawData.json','data/filterByLang.json')
+    filterRawDataByLang('data/RawData.json', 'data/filterByLang.json')
     toNum = lineCounts('data/filterByLang.json')
-    

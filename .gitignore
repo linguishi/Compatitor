@@ -2,3 +2,5 @@
 getRawData.py
 analyzedCouterparts.py
 /tmpdata
+data/appdesc*
+data/model.*
